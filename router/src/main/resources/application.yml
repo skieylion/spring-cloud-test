@@ -1,0 +1,39 @@
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: service-test-1
+          uri: lb://service-test-1
+          predicates:
+            - Path=/products/**
+          filters:
+            - AddRequestHeader=X-Request-Gateway, MyGateway
+    loadbalancer:
+      retry:
+        retry-on-all-operations: true
+        max-retries-on-next-service-instance: 2
+        max-retries-on-same-service-instance: 5
+        backoff:
+          min-backoff: 2000ms
+  application:
+    name: router
+server:
+  port: 8085
+eureka:
+  client:
+    webclient:
+      enabled: true
+    enabled: true
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+logging:
+  level:
+    root: debug
