@@ -1,0 +1,14 @@
+server:
+  port: 8087
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/skieylion/spring-cloud-test.git
+          search-paths: '{application}'
+          default-label: master
+          username: ubahhukob@yandex.ru
+          password: 
